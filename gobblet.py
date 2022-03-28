@@ -46,7 +46,10 @@ def formater_un_gobblet(gobblet):
     Returns:
         str: Représentation du Gobblet pour le bon joueur
     """
-    pass
+    if not gobblet:
+        return '   '
+
+    return (f' {GOBBLET_REPRÉSENTATION[gobblet[0]][gobblet[1]]} ')
 
 
 def formater_un_joueur(joueur):
@@ -58,7 +61,7 @@ def formater_un_joueur(joueur):
     Returns:
         str: Représentation du joueur et de ses piles de Gobblet
     """
-    pass
+    return (f'{joueur["nom"]}: {formater_un_gobblet(joueur["piles"][0])} {formater_un_gobblet(joueur["piles"][1])} {formater_un_gobblet(joueur["piles"][2])}')
 
 
 def formater_plateau(plateau):
@@ -70,7 +73,15 @@ def formater_plateau(plateau):
     Returns:
         str: Représentation du plateau avec ses Gobblet
     """
-    pass
+    return (
+        f"3{formater_un_gobblet(plateau[0][0])}|{formater_un_gobblet(plateau[0][1])}|{formater_un_gobblet(plateau[0][2])}|{formater_un_gobblet(plateau[0][3])}\n"
+        f" ───┼───┼───┼───\n"
+        f"2{formater_un_gobblet(plateau[1][0])}|{formater_un_gobblet(plateau[1][1])}|{formater_un_gobblet(plateau[1][2])}|{formater_un_gobblet(plateau[1][3])}\n"
+        f" ───┼───┼───┼───\n"
+        f"1{formater_un_gobblet(plateau[2][0])}|{formater_un_gobblet(plateau[2][1])}|{formater_un_gobblet(plateau[2][2])}|{formater_un_gobblet(plateau[2][3])}\n"
+        f" ───┼───┼───┼───\n"
+        f"0{formater_un_gobblet(plateau[3][0])}|{formater_un_gobblet(plateau[3][1])}|{formater_un_gobblet(plateau[3][2])}|{formater_un_gobblet(plateau[3][3])}\n"
+        f"  0   1   2   3 ")
 
 
 def formater_jeu(plateau, joueurs):
@@ -83,7 +94,12 @@ def formater_jeu(plateau, joueurs):
     Returns:
         str: Représentation du jeu
     """
-    pass
+    a = max(len(joueurs[0]["nom"]) + 13, len(joueurs[1]["nom"]) + 13)
+    
+    return ("0   1   2 ".rjust(a) + "\n"
+            + formater_un_joueur(joueurs[0]).rjust(a) + "\n"
+            + formater_un_joueur(joueurs[1]).rjust(a) + "\n\n"
+            + formater_plateau(plateau))
 
 
 def formater_les_parties(parties):
@@ -97,7 +113,13 @@ def formater_les_parties(parties):
     Returns:
         str: Représentation des parties
     """
-    pass
+    res = ""
+    j = 1
+    for i in parties:
+        res += f"{j} : {i['date']}, {i['joueurs'][0]} vs {i['joueurs'][1]}\n"
+        j += 1
+
+    return (res)
 
 
 def récupérer_le_coup():
@@ -119,4 +141,5 @@ def récupérer_le_coup():
         Donnez le numéro de la pile (p) ou la position sur le plateau (x,y): 2,3
         Où voulez-vous placer votre Gobblet (x,y): 0,1
     """
-    pass
+    coup = [tuple(input("Donnez le numéro de la pile (p) ou la position sur le plateau (x,y):")), tuple(input("Où voulez-vous placer votre gobelet (x,y):"))]
+    return coup
